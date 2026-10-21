@@ -5,12 +5,11 @@ import ru.prodflow.dto.request.PartRequestDto;
 import ru.prodflow.model.Part;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PartService {
     void createPart(PartRequestDto partRequestDto);
 
-    Optional<Part> getPartById(Long id);
+    Part getPartById(Long id);
 
     void updatePart(Long id, UpdatePartDto updatePartDto);
 
