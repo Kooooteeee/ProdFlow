@@ -14,4 +14,6 @@ public interface OrderOperationRepository extends JpaRepository<OrderOperation, 
 
     List<OrderOperation> findByStatusAndReadyAtLessThanEqualOrderByReadyAtAsc(OrderOperationStatus status,
                                                                               OffsetDateTime now);
+
+    void deleteAllByOrder_Id(Long id);
 }
