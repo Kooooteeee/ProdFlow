@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public void createOrder(OrderRequestDto orderRequestDto) {
+    public Order createOrder(OrderRequestDto orderRequestDto) {
         Part part = partService.getPartById(orderRequestDto.getPartId());
 
         List<PartOperation> partOperations = getCheckedPartOperations(part.getId());
@@ -49,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
         Order savedOrder = orderRepository.save(order);
 
         createOrderOperations(savedOrder, savedOrder.getCreatedAt(), partOperations);
+
+        return savedOrder;
     }
 
     @Override
