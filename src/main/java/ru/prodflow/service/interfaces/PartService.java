@@ -7,7 +7,7 @@ import ru.prodflow.model.Part;
 import java.util.List;
 
 public interface PartService {
-    void createPart(PartRequestDto partRequestDto);
+    Part createPart(PartRequestDto partRequestDto);
 
     Part getPartById(Long id);
 

@@ -31,7 +31,7 @@ public class PartServiceImpl implements PartService {
 
     @Transactional
     @Override
-    public void createPart(PartRequestDto partRequestDto) {
+    public Part createPart(PartRequestDto partRequestDto) {
         List<Operation> operations = getCheckedIds(partRequestDto.getOperationIds());
         Part part = new Part();
         part.setName(partRequestDto.getName());
@@ -55,6 +55,8 @@ public class PartServiceImpl implements PartService {
 
             number++;
         }
+
+        return savedPart;
     }
 
     @Override
