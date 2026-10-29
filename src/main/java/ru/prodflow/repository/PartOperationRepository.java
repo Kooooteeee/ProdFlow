@@ -13,4 +13,6 @@ public interface PartOperationRepository extends JpaRepository<PartOperation, Pa
     boolean existsByPart_IdAndOperation_IsActiveFalse(Long id);
 
     List<PartOperation> findAllByPart_IdOrderById_SequenceAsc(Long id);
+
+    List<PartOperation> findAllByOperation_Id(Long id);
 }
