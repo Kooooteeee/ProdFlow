@@ -1,7 +1,7 @@
 package ru.prodflow.service;
 
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +9,7 @@ import ru.prodflow.dto.UpdateMachineDto;
 import ru.prodflow.dto.request.MachineRequestDto;
 import ru.prodflow.dto.request.OrderRequestDto;
 import ru.prodflow.dto.request.PartRequestDto;
+import ru.prodflow.dto.request.UserRequestDto;
 import ru.prodflow.enums.MachineStatus;
 import ru.prodflow.exception.ConflictException;
 import ru.prodflow.model.*;
@@ -18,6 +19,7 @@ import ru.prodflow.repository.OrderOperationRepository;
 import ru.prodflow.service.interfaces.MachineService;
 import ru.prodflow.service.interfaces.OrderService;
 import ru.prodflow.service.interfaces.PartService;
+import ru.prodflow.service.interfaces.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,9 @@ public class MachineServiceIntegrationTest {
 
     @Autowired
     private OrderOperationRepository orderOperationRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Transactional
     @Test
@@ -179,7 +184,14 @@ public class MachineServiceIntegrationTest {
         orderRequestDto.setPartId(savedPart.getId());
         orderRequestDto.setQuantity(10);
 
-        orderService.createOrder(orderRequestDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        orderService.createOrder(orderRequestDto, savedUser.getId());
 
         Operation updatedOperation = new Operation();
         updatedOperation.setName("testOperation_Updated");
@@ -268,7 +280,14 @@ public class MachineServiceIntegrationTest {
         orderRequestDto.setPartId(savedPart.getId());
         orderRequestDto.setQuantity(10);
 
-        orderService.createOrder(orderRequestDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        orderService.createOrder(orderRequestDto, savedUser.getId());
 
         assertThrows(ConflictException.class, () -> machineService.archiveMachine(savedMachine.getId()));
     }

@@ -8,7 +8,7 @@ import ru.prodflow.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    Order createOrder(OrderRequestDto orderRequestDto);
+    Order createOrder(OrderRequestDto orderRequestDto, Long customerId);
 
     Order getOrderById(Long id);
 

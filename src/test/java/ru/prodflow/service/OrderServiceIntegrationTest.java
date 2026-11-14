@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.prodflow.dto.UpdateOrderDto;
 import ru.prodflow.dto.request.OrderRequestDto;
+import ru.prodflow.dto.request.UserRequestDto;
 import ru.prodflow.enums.MachineStatus;
 import ru.prodflow.enums.OrderOperationStatus;
 import ru.prodflow.enums.OrderStatus;
@@ -15,6 +16,7 @@ import ru.prodflow.exception.NotFoundException;
 import ru.prodflow.model.*;
 import ru.prodflow.repository.*;
 import ru.prodflow.service.interfaces.OrderService;
+import ru.prodflow.service.interfaces.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,9 @@ public class OrderServiceIntegrationTest {
 
     @Autowired
     private MachineOperationRepository machineOperationRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Test
     void getOrderById_WhenNotFound_ThrowsException() {
@@ -134,7 +139,14 @@ public class OrderServiceIntegrationTest {
         orderDto.setQuantity(10);
         orderDto.setPartId(savedPart.getId());
 
-        Order savedOrder = orderService.createOrder(orderDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        Order savedOrder = orderService.createOrder(orderDto, savedUser.getId());
 
         entityManager.flush();
         entityManager.clear();
@@ -213,7 +225,14 @@ public class OrderServiceIntegrationTest {
         orderDto.setQuantity(10);
         orderDto.setPartId(savedPart.getId());
 
-        Order savedOrder = orderService.createOrder(orderDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        Order savedOrder = orderService.createOrder(orderDto, savedUser.getId());
 
         Part part2 = new Part();
         part2.setName("testPart_ForUpdate");
@@ -337,7 +356,14 @@ public class OrderServiceIntegrationTest {
         orderDto.setQuantity(10);
         orderDto.setPartId(savedPart.getId());
 
-        Order savedOrder = orderService.createOrder(orderDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        Order savedOrder = orderService.createOrder(orderDto, savedUser.getId());
         orderService.cancelOrder(savedOrder.getId());
 
         entityManager.flush();
@@ -397,7 +423,14 @@ public class OrderServiceIntegrationTest {
         orderDto.setQuantity(10);
         orderDto.setPartId(savedPart.getId());
 
-        Order savedOrder = orderService.createOrder(orderDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        Order savedOrder = orderService.createOrder(orderDto, savedUser.getId());
         savedOrder.setStatus(OrderStatus.IN_PROGRESS);
 
         entityManager.flush();
@@ -454,7 +487,14 @@ public class OrderServiceIntegrationTest {
         orderDto.setQuantity(10);
         orderDto.setPartId(savedPart.getId());
 
-        Order savedOrder = orderService.createOrder(orderDto);
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setEmail("test2@example.com");
+        userRequestDto.setName("testName");
+        userRequestDto.setPassword("testPassword");
+
+        User savedUser = userService.createUser(userRequestDto);
+
+        Order savedOrder = orderService.createOrder(orderDto, savedUser.getId());
         savedOrder.setStatus(OrderStatus.IN_PROGRESS);
 
         entityManager.flush();

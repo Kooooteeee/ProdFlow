@@ -1,6 +1,6 @@
 package ru.prodflow.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.prodflow.dto.UpdateOrderDto;
@@ -16,9 +16,9 @@ import ru.prodflow.model.PartOperation;
 import ru.prodflow.repository.OrderOperationRepository;
 import ru.prodflow.repository.OrderRepository;
 import ru.prodflow.repository.PartOperationRepository;
-import ru.prodflow.repository.UserRepository;
 import ru.prodflow.service.interfaces.OrderService;
 import ru.prodflow.service.interfaces.PartService;
+import ru.prodflow.service.interfaces.UserService;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -31,17 +31,17 @@ public class OrderServiceImpl implements OrderService {
     private final PartService partService;
     private final PartOperationRepository partOperationRepository;
     private final OrderOperationRepository orderOperationRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Transactional
     @Override
-    public Order createOrder(OrderRequestDto orderRequestDto) {
+    public Order createOrder(OrderRequestDto orderRequestDto, Long customerId) {
         Part part = partService.getPartById(orderRequestDto.getPartId());
 
         List<PartOperation> partOperations = getCheckedPartOperations(part.getId());
 
         Order order = new Order();
-        order.setCustomer(userRepository.findById(1L).orElseThrow(() -> new NotFoundException("Пользователя нет.")));
+        order.setCustomer(userService.findUserById(customerId));
         order.setPart(part);
         order.setQuantity(orderRequestDto.getQuantity());
         order.setStatus(OrderStatus.NEW);
