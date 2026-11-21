@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateOrderDto {
+    @Positive
     private Long partId;
     @Positive
     private Integer quantity;

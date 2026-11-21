@@ -11,9 +11,11 @@ import lombok.Setter;
 @Setter
 public class UserRequestDto {
     @NotBlank
+    @Size(max = 255)
     private String name;
     @NotBlank
     @Email
+    @Size(max = 255)
     private String email;
     @NotBlank
     @Size(min = 8)

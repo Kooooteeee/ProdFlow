@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 public class OrderRequestDto {
     @NotNull
+    @Positive
     private Long partId;
     @NotNull
     @Positive
