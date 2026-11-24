@@ -63,8 +63,8 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @GetMapping(params = "status")
-    public List<OrderResponseDto> getOrdersByStatus(@RequestParam OrderStatus orderStatus) {
-        return orderService.findAllByStatus(orderStatus).stream().map(OrderMapper::toResponseDto).toList();
+    public List<OrderResponseDto> getOrdersByStatus(@RequestParam OrderStatus status) {
+        return orderService.findAllByStatus(status).stream().map(OrderMapper::toResponseDto).toList();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

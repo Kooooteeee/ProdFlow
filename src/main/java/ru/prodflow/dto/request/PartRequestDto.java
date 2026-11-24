@@ -16,6 +16,5 @@ public class PartRequestDto {
     private String description;
     @NotEmpty
     @NotNull
-    @Positive
-    private List<Long> operationIds;
+    private List<@Positive Long> operationIds;
 }

@@ -17,7 +17,6 @@ public class UpdatePartDto {
     @Pattern(regexp = "(?s).*\\S.*")
     private String description;
     @Size(min = 1)
-    @Positive
-    private List<Long> operationIds;
+    private List<@Positive Long> operationIds;
 }
 
