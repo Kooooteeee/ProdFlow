@@ -5,7 +5,7 @@ import ru.prodflow.model.User;
 
 public class UserMapper {
 
-    public static UserResponseDto userResponseDto(User user) {
+    public static UserResponseDto toResponseDto(User user) {
         UserResponseDto userResponseDto = new UserResponseDto();
 
         userResponseDto.setId(user.getId());

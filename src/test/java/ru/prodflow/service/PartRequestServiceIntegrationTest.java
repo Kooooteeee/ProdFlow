@@ -57,8 +57,6 @@ public class PartRequestServiceIntegrationTest {
     @Autowired
     private EntityManager entityManager;
 
-    // 1. Создание заявки
-
     @Transactional
     @Test
     public void createPartRequest_WhenValid_CreatesPartRequest() {
@@ -81,8 +79,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals(PartRequestStatus.PENDING, foundRequest.getStatus());
         assertEquals(customer.getId(), foundRequest.getCustomer().getId());
     }
-
-    // 2. Успешное одобрение заявки
 
     @Transactional
     @Test
@@ -118,8 +114,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals(operation.getId(), partOperations.get(0).getOperation().getId());
     }
 
-    // 3. Одобрение заявки с уже существующим названием детали
-
     @Transactional
     @Test
     public void approvePartRequest_WhenNameExists_ThrowsException() {
@@ -154,8 +148,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals(countBefore, partRepository.count());
     }
 
-    // 4. Повторное одобрение уже обработанной заявки
-
     @Transactional
     @Test
     public void approvePartRequest_WhenAlreadyProcessed_ThrowsException() {
@@ -178,8 +170,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals(PartRequestStatus.REJECTED, foundRequest.getStatus());
     }
 
-    // 5. Отклонение заявок
-
     @Transactional
     @Test
     public void rejectPartRequests_WhenValid_RejectsPendingRequests() {
@@ -189,7 +179,6 @@ public class PartRequestServiceIntegrationTest {
         PartRequest secondRequest = createRequest(customer.getId(), "secondRejectPart");
         PartRequest approvedRequest = createRequest(customer.getId(), "alreadyApprovedPart");
 
-        // Подготавливаем ранее обработанную заявку
         approvedRequest.setStatus(PartRequestStatus.APPROVED);
 
         entityManager.flush();
@@ -214,8 +203,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals(PartRequestStatus.APPROVED, foundApproved.getStatus());
     }
 
-    // 6. Успешное редактирование заявки
-
     @Transactional
     @Test
     public void updatePartRequest_WhenPending_UpdatesPartRequest() {
@@ -238,8 +225,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals("updatedDescription", foundRequest.getDescription());
         assertEquals(PartRequestStatus.PENDING, foundRequest.getStatus());
     }
-
-    // 7. Редактирование уже обработанной заявки
 
     @Transactional
     @Test
@@ -266,8 +251,6 @@ public class PartRequestServiceIntegrationTest {
         assertEquals("testDescription", foundRequest.getDescription());
         assertEquals(PartRequestStatus.REJECTED, foundRequest.getStatus());
     }
-
-    // Вспомогательные методы
 
     private User createCustomer(String email) {
         UserRequestDto userRequestDto = new UserRequestDto();
